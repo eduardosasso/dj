@@ -1,0 +1,26 @@
+{
+  "name": "dj",
+  "version": "1.0.0",
+  "description": "Describe JSON",
+  "main": "index.js",
+  "bin": "./index.js",
+  "scripts": {
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eduardosasso/dj.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/eduardosasso/dj/issues"
+  },
+  "homepage": "https://github.com/eduardosasso/dj#readme",
+  "devDependencies": {
+    "vitest": "^0.22.0"
+  }
+}
