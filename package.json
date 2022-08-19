@@ -22,5 +22,8 @@
   "homepage": "https://github.com/eduardosasso/dj#readme",
   "devDependencies": {
     "vitest": "^0.22.0"
+  },
+  "dependencies": {
+    "lodash-es": "^4.17.21"
   }
 }
