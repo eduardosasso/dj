@@ -10,6 +10,7 @@ export const dj = (json) => {
 
 const describe = (data) => {
   const structure = {};
+
   Object.keys(data).forEach((key) => {
     const value = data[key];
     const type = dataType(value);
@@ -29,7 +30,7 @@ const dataType = (value) => {
 const handleString = (value) => {
   return {
     type: "string",
-    length: value.length,
+    maxLength: value.length,
   };
 };
 
@@ -42,13 +43,41 @@ const handleBoolean = (value) => {
 const handleNumber = (value) => {
   return {
     type: Number.isInteger(value) ? "integer" : "float",
-    length: value.toString().length,
+    maxLength: value.toString().length,
   };
 };
 
 const handleObject = (value) => {};
 
-const handleArray = (value) => {};
+const handleArray = (value) => {
+  const root = {
+    type: "array",
+    count: value.length,
+    structure: [],
+  };
+
+  const types = {};
+
+  // loop over array items and organize them by type
+  value.forEach((item) => {
+    const type = dataType(item);
+    types[type] = [...(types[type] || []), HANDLER[type](item)];
+  });
+
+  // loop over types and break in groups
+  Object.keys(types).forEach((type) => {
+    const groups = _.groupBy(types[type], "type");
+
+    // loop over groups and take the one with the max length
+    Object.keys(groups).forEach((group) => {
+      const item = _.maxBy(groups[group], "maxLength");
+
+      root.structure.push({ ...item, count: groups[group].length });
+    });
+  });
+
+  return [root];
+};
 
 const HANDLER = {
   string: handleString,

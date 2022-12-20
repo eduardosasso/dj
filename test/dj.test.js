@@ -14,17 +14,40 @@ test("primitive types", () => {
   const result = dj(json);
 
   const expected = {
-    name: { type: "string", length: 4 },
-    lastname: { type: "string", length: 3 },
-    age: { type: "integer", length: 2 },
+    name: { type: "string", maxLength: 4 },
+    lastname: { type: "string", maxLength: 3 },
+    age: { type: "integer", maxLength: 2 },
     active: { type: "boolean" },
-    weight: { type: "float", length: 4 },
+    weight: { type: "float", maxLength: 4 },
   };
 
   expect(result).toEqual(expected);
 });
 
-test("object type", () => {
+test("array", () => {
+  const data = {
+    items: [1, 2, 3, 4, 532, 12.44, "hello world"],
+  };
+
+  const json = JSON.stringify(data);
+  const result = dj(json);
+
+  const expected = [
+    {
+      type: "array",
+      count: 7,
+      structure: [
+        { type: "integer", maxLength: 3, count: 5 },
+        { type: "float", maxLength: 5, count: 1 },
+        { type: "string", maxLength: 11, count: 1 },
+      ],
+    },
+  ];
+
+  expect(result.items).toEqual(expected);
+});
+
+test.skip("object type", () => {
   const data = {
     name: "John",
     lastname: "Doe",
@@ -45,17 +68,4 @@ test("object type", () => {
   expect(result.age).toBe("number");
   expect(result.address.street).toBe("string");
   expect(result.address.number).toBe("number");
-});
-
-test("array", () => {
-  const data = {
-    items: [1, 2, 3, 4, 5],
-  };
-
-  const json = JSON.stringify(data);
-  const result = dj(json);
-
-  console.log(result);
-
-  expect(result.items).toBe("array");
 });
