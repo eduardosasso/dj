@@ -10,10 +10,13 @@ export const dj = (json) => {
 };
 
 const describe = (data) => {
+  const structure = {};
+
   Object.keys(data).forEach((key) => {
-    formatString(data, key);
+    // formatString(data, key);
     formatNumber(data, key);
     formatObject(data, key);
+    // formatArray(data, key);
   });
 
   return data;
@@ -28,6 +31,7 @@ const formatString = (data, key) => {
 const formatNumber = (data, key) => {
   if (!_.isNumber(data[key])) return;
 
+  console.log("num", data[key]);
   data[key] = "number";
 };
 
@@ -35,4 +39,21 @@ const formatObject = (data, key) => {
   if (!_.isObject(data[key])) return;
 
   data[key] = describe(data[key]);
+};
+
+const formatArray = (data, key) => {
+  if (!_.isArray(data[key])) return;
+
+  const structure = new Set();
+
+  const items = _.cloneDeep(data[key]);
+  console.log(items);
+
+  items.forEach((item, index) => {
+    // console.log(items, index);
+    // console.log(describe(items, index));
+    structure.add(describe(items, index));
+  });
+
+  data[key] = structure;
 };

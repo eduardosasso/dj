@@ -17,7 +17,7 @@ test.skip("primitive types", () => {
   expect(result.age).toBe("number");
 });
 
-test("object type", () => {
+test.skip("object type", () => {
   const data = {
     name: "John",
     lastname: "Doe",
@@ -37,6 +37,17 @@ test("object type", () => {
   expect(result.age).toBe("number");
   expect(result.address.street).toBe("string");
   expect(result.address.number).toBe("number");
+});
 
-  console.log(result);
+test("array", () => {
+  const data = {
+    items: [1, 2, 3, 4, 5],
+  };
+
+  const json = JSON.stringify(data);
+  const result = dj(json);
+
+  // console.log(result);
+
+  expect(result.items).toBe("array");
 });
