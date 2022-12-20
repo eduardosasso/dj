@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/eduardosasso/dj#readme",
   "devDependencies": {
+    "@vitest/coverage-c8": "^0.26.0",
     "vitest": "^0.25.6"
   },
   "dependencies": {
