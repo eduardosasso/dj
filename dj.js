@@ -4,56 +4,56 @@ export const dj = (json) => {
   const data = JSON.parse(json);
 
   // TODO
-  // if then next if function returns true
-  // add metadata
+  // handle null, undefined
   return describe(data);
 };
 
 const describe = (data) => {
   const structure = {};
-
   Object.keys(data).forEach((key) => {
-    // formatString(data, key);
-    formatNumber(data, key);
-    formatObject(data, key);
-    // formatArray(data, key);
+    const value = data[key];
+    const type = dataType(value);
+
+    structure[key] = HANDLER[type](value);
   });
 
-  return data;
+  return structure;
 };
 
-const formatString = (data, key) => {
-  if (!_.isString(data[key])) return;
+const dataType = (value) => {
+  const type = typeof value;
 
-  data[key] = "string";
+  return Array.isArray(value) ? "array" : type;
 };
 
-const formatNumber = (data, key) => {
-  if (!_.isNumber(data[key])) return;
-
-  console.log("num", data[key]);
-  data[key] = "number";
+const handleString = (value) => {
+  return {
+    type: "string",
+    length: value.length,
+  };
 };
 
-const formatObject = (data, key) => {
-  if (!_.isObject(data[key])) return;
-
-  data[key] = describe(data[key]);
+const handleBoolean = (value) => {
+  return {
+    type: "boolean",
+  };
 };
 
-const formatArray = (data, key) => {
-  if (!_.isArray(data[key])) return;
+const handleNumber = (value) => {
+  return {
+    type: Number.isInteger(value) ? "integer" : "float",
+    length: value.toString().length,
+  };
+};
 
-  const structure = new Set();
+const handleObject = (value) => {};
 
-  const items = _.cloneDeep(data[key]);
-  console.log(items);
+const handleArray = (value) => {};
 
-  items.forEach((item, index) => {
-    // console.log(items, index);
-    // console.log(describe(items, index));
-    structure.add(describe(items, index));
-  });
-
-  data[key] = structure;
+const HANDLER = {
+  string: handleString,
+  number: handleNumber,
+  boolean: handleBoolean,
+  object: handleObject,
+  array: handleArray,
 };

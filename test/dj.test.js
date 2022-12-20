@@ -1,23 +1,30 @@
 import { expect, test } from "vitest";
 import { dj } from "../dj.js";
 
-test.skip("primitive types", () => {
+test("primitive types", () => {
   const data = {
     name: "John",
     lastname: "Doe",
     age: 30,
     active: true,
+    weight: 80.5,
   };
 
   const json = JSON.stringify(data);
   const result = dj(json);
 
-  expect(result.name).toBe("string");
-  expect(result.lastname).toBe("string");
-  expect(result.age).toBe("number");
+  const expected = {
+    name: { type: "string", length: 4 },
+    lastname: { type: "string", length: 3 },
+    age: { type: "integer", length: 2 },
+    active: { type: "boolean" },
+    weight: { type: "float", length: 4 },
+  };
+
+  expect(result).toEqual(expected);
 });
 
-test.skip("object type", () => {
+test("object type", () => {
   const data = {
     name: "John",
     lastname: "Doe",
@@ -31,6 +38,7 @@ test.skip("object type", () => {
 
   const json = JSON.stringify(data);
   const result = dj(json);
+  console.log(result);
 
   expect(result.name).toBe("string");
   expect(result.lastname).toBe("string");
@@ -47,7 +55,7 @@ test("array", () => {
   const json = JSON.stringify(data);
   const result = dj(json);
 
-  // console.log(result);
+  console.log(result);
 
   expect(result.items).toBe("array");
 });
