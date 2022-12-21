@@ -4,7 +4,6 @@ export const dj = (json) => {
   const data = JSON.parse(json);
 
   // TODO
-  // handle null, undefined
   // handle invalid json
   return describe(data);
 };
@@ -25,7 +24,10 @@ const describe = (data) => {
 const dataType = (value) => {
   const type = typeof value;
 
-  return Array.isArray(value) ? "array" : type;
+  if (value === null) return "null";
+  if (Array.isArray(value)) return "array";
+
+  return type;
 };
 
 const handleString = (value) => {
@@ -62,6 +64,12 @@ const handleObject = (value) => {
   return root;
 };
 
+const handleNull = (value) => {
+  return {
+    _type: "null",
+  };
+};
+
 const handleArray = (value) => {
   const root = {
     _type: "array",
@@ -83,10 +91,9 @@ const handleArray = (value) => {
 
     // loop over groups and take the one with the max length
     Object.keys(groups).forEach((group) => {
-      const item =
-        type === "object"
-          ? groups[group][0]
-          : _.maxBy(groups[group], "_maxLength");
+      const item = ["object", "null"].includes(type)
+        ? groups[group][0]
+        : _.maxBy(groups[group], "_maxLength");
 
       if (root["_count"] !== groups[group].length)
         item["_count"] = groups[group].length;
@@ -104,4 +111,5 @@ const HANDLER = {
   boolean: handleBoolean,
   object: handleObject,
   array: handleArray,
+  null: handleNull,
 };

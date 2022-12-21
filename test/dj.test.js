@@ -28,7 +28,7 @@ test("primitive types", () => {
 
 test("array", () => {
   const data = {
-    items: [1, 2, 3, 4, 532, 12.44, "hello world"],
+    items: [1, 2, 3, 4, 532, 12.44, null, "hello world", null],
   };
 
   const json = JSON.stringify(data);
@@ -36,19 +36,37 @@ test("array", () => {
 
   // console.log(JSON.stringify(result, null, 2));
 
-  const expected = [
-    {
-      _type: "array",
-      _count: 7,
-      _structure: [
-        { _type: "integer", _maxLength: 3, _count: 5 },
-        { _type: "float", _maxLength: 5, _count: 1 },
-        { _type: "string", _maxLength: 11, _count: 1 },
-      ],
-    },
-  ];
+  const expected = {
+    items: [
+      {
+        _type: "array",
+        _count: 9,
+        _structure: [
+          {
+            _type: "integer",
+            _maxLength: 3,
+            _count: 5,
+          },
+          {
+            _type: "float",
+            _maxLength: 5,
+            _count: 1,
+          },
+          {
+            _type: "null",
+            _count: 2,
+          },
+          {
+            _type: "string",
+            _maxLength: 11,
+            _count: 1,
+          },
+        ],
+      },
+    ],
+  };
 
-  expect(result.items).toEqual(expected);
+  expect(result).toEqual(expected);
 });
 
 test("array with object", () => {
@@ -170,6 +188,28 @@ test("object type", () => {
           _maxLength: 3,
         },
       },
+    },
+  };
+
+  expect(result).toEqual(expected);
+});
+
+test("null or undefined", () => {
+  const data = {
+    name: "Sara",
+    lastname: null,
+  };
+
+  const json = JSON.stringify(data);
+  const result = dj(json);
+
+  const expected = {
+    name: {
+      _type: "string",
+      _maxLength: 4,
+    },
+    lastname: {
+      _type: "null",
     },
   };
 
