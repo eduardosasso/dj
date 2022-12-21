@@ -5,6 +5,7 @@ export const dj = (json) => {
 
   // TODO
   // handle null, undefined
+  // handle invalid json
   return describe(data);
 };
 
@@ -29,33 +30,33 @@ const dataType = (value) => {
 
 const handleString = (value) => {
   return {
-    type: "string",
-    maxLength: value.length,
+    _type: "string",
+    _maxLength: value.length,
   };
 };
 
 const handleBoolean = (value) => {
   return {
-    type: "boolean",
+    _type: "boolean",
   };
 };
 
 const handleNumber = (value) => {
   return {
-    type: Number.isInteger(value) ? "integer" : "float",
-    maxLength: value.toString().length,
+    _type: Number.isInteger(value) ? "integer" : "float",
+    _maxLength: value.toString().length,
   };
 };
 
 const handleObject = (value) => {
   const root = {
-    type: "object",
-    structure: {},
+    _type: "object",
+    _structure: {},
   };
 
   Object.keys(value).forEach((key) => {
     const type = dataType(value[key]);
-    root.structure[key] = HANDLER[type](value[key]);
+    root._structure[key] = HANDLER[type](value[key]);
   });
 
   return root;
@@ -63,9 +64,9 @@ const handleObject = (value) => {
 
 const handleArray = (value) => {
   const root = {
-    type: "array",
-    count: value.length,
-    structure: [],
+    _type: "array",
+    _count: value.length,
+    _structure: [],
   };
 
   const types = {};
@@ -78,13 +79,19 @@ const handleArray = (value) => {
 
   // loop over types and break in groups
   Object.keys(types).forEach((type) => {
-    const groups = _.groupBy(types[type], "type");
+    const groups = _.groupBy(types[type], "_type");
 
     // loop over groups and take the one with the max length
     Object.keys(groups).forEach((group) => {
-      const item = _.maxBy(groups[group], "maxLength");
+      const item =
+        type === "object"
+          ? groups[group][0]
+          : _.maxBy(groups[group], "_maxLength");
 
-      root.structure.push({ ...item, count: groups[group].length });
+      if (root["_count"] !== groups[group].length)
+        item["_count"] = groups[group].length;
+
+      root._structure.push(item);
     });
   });
 

@@ -14,12 +14,14 @@ test("primitive types", () => {
   const result = dj(json);
 
   const expected = {
-    name: { type: "string", maxLength: 4 },
-    lastname: { type: "string", maxLength: 3 },
-    age: { type: "integer", maxLength: 2 },
-    active: { type: "boolean" },
-    weight: { type: "float", maxLength: 4 },
+    name: { _type: "string", _maxLength: 4 },
+    lastname: { _type: "string", _maxLength: 3 },
+    age: { _type: "integer", _maxLength: 2 },
+    active: { _type: "boolean" },
+    weight: { _type: "float", _maxLength: 4 },
   };
+
+  // console.log(JSON.stringify(result, null, 2));
 
   expect(result).toEqual(expected);
 });
@@ -32,19 +34,97 @@ test("array", () => {
   const json = JSON.stringify(data);
   const result = dj(json);
 
+  // console.log(JSON.stringify(result, null, 2));
+
   const expected = [
     {
-      type: "array",
-      count: 7,
-      structure: [
-        { type: "integer", maxLength: 3, count: 5 },
-        { type: "float", maxLength: 5, count: 1 },
-        { type: "string", maxLength: 11, count: 1 },
+      _type: "array",
+      _count: 7,
+      _structure: [
+        { _type: "integer", _maxLength: 3, _count: 5 },
+        { _type: "float", _maxLength: 5, _count: 1 },
+        { _type: "string", _maxLength: 11, _count: 1 },
       ],
     },
   ];
 
   expect(result.items).toEqual(expected);
+});
+
+test("array with object", () => {
+  const data = {
+    results: {
+      items: [
+        {
+          name: "Adam",
+          lastname: "Driver",
+          age: 20,
+          active: true,
+          weight: 61,
+          date: "2021-01-01",
+        },
+        {
+          name: "John",
+          lastname: "Doe",
+          age: 30,
+          active: true,
+          weight: 80.5,
+          date: "2021-01-01",
+        },
+      ],
+    },
+  };
+
+  const json = JSON.stringify(data);
+  const result = dj(json);
+
+  // console.log(JSON.stringify(result, null, 2));
+
+  const expected = {
+    results: {
+      _type: "object",
+      _structure: {
+        items: [
+          {
+            _type: "array",
+            _count: 2,
+            _structure: [
+              {
+                _type: "object",
+                _structure: {
+                  name: {
+                    _type: "string",
+                    _maxLength: 4,
+                  },
+                  lastname: {
+                    _type: "string",
+                    _maxLength: 6,
+                  },
+                  age: {
+                    _type: "integer",
+                    _maxLength: 2,
+                  },
+                  active: {
+                    _type: "boolean",
+                  },
+                  weight: {
+                    _type: "integer",
+                    _maxLength: 2,
+                  },
+                  date: {
+                    _type: "string",
+                    _maxLength: 10,
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  };
+
+  expect(result).toEqual(expected);
 });
 
 test("object type", () => {
@@ -64,30 +144,30 @@ test("object type", () => {
 
   const expected = {
     name: {
-      type: "string",
-      maxLength: 4,
+      _type: "string",
+      _maxLength: 4,
     },
     lastname: {
-      type: "string",
-      maxLength: 3,
+      _type: "string",
+      _maxLength: 3,
     },
     age: {
-      type: "integer",
-      maxLength: 2,
+      _type: "integer",
+      _maxLength: 2,
     },
     active: {
-      type: "boolean",
+      _type: "boolean",
     },
     address: {
-      type: "object",
-      structure: {
+      _type: "object",
+      _structure: {
         street: {
-          type: "string",
-          maxLength: 11,
+          _type: "string",
+          _maxLength: 11,
         },
         number: {
-          type: "integer",
-          maxLength: 3,
+          _type: "integer",
+          _maxLength: 3,
         },
       },
     },
