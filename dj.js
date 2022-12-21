@@ -47,7 +47,19 @@ const handleNumber = (value) => {
   };
 };
 
-const handleObject = (value) => {};
+const handleObject = (value) => {
+  const root = {
+    type: "object",
+    structure: {},
+  };
+
+  Object.keys(value).forEach((key) => {
+    const type = dataType(value[key]);
+    root.structure[key] = HANDLER[type](value[key]);
+  });
+
+  return root;
+};
 
 const handleArray = (value) => {
   const root = {

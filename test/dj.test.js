@@ -47,7 +47,7 @@ test("array", () => {
   expect(result.items).toEqual(expected);
 });
 
-test.skip("object type", () => {
+test("object type", () => {
   const data = {
     name: "John",
     lastname: "Doe",
@@ -61,11 +61,37 @@ test.skip("object type", () => {
 
   const json = JSON.stringify(data);
   const result = dj(json);
-  console.log(result);
 
-  expect(result.name).toBe("string");
-  expect(result.lastname).toBe("string");
-  expect(result.age).toBe("number");
-  expect(result.address.street).toBe("string");
-  expect(result.address.number).toBe("number");
+  const expected = {
+    name: {
+      type: "string",
+      maxLength: 4,
+    },
+    lastname: {
+      type: "string",
+      maxLength: 3,
+    },
+    age: {
+      type: "integer",
+      maxLength: 2,
+    },
+    active: {
+      type: "boolean",
+    },
+    address: {
+      type: "object",
+      structure: {
+        street: {
+          type: "string",
+          maxLength: 11,
+        },
+        number: {
+          type: "integer",
+          maxLength: 3,
+        },
+      },
+    },
+  };
+
+  expect(result).toEqual(expected);
 });
