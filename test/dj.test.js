@@ -35,8 +35,7 @@ test("array", () => {
   const json = JSON.stringify(data);
   const result = dj(json);
 
-  // console.log(JSON.stringify(result, null, 2));
-  console.log(highlight(JSON.stringify(result, null, 2), { language: "json" }));
+  // console.log(highlight(JSON.stringify(result, null, 2), { language: "json" }));
 
   const expected = {
     items: [

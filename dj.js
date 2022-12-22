@@ -4,8 +4,6 @@ export const dj = (json) => {
   try {
     const data = JSON.parse(json);
 
-    // TODO
-    // handle invalid json
     return describe(data);
   } catch (error) {
     throw new Error("Invalid JSON");

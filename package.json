@@ -1,5 +1,5 @@
 {
-  "name": "dj",
+  "name": "@eduardosasso/dj",
   "version": "1.0.0",
   "description": "Describe JSON",
   "main": "index.js",
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/eduardosasso/dj.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Eduardo Sasso",
   "license": "ISC",
   "type": "module",
   "bugs": {
