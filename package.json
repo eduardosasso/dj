@@ -25,6 +25,7 @@
     "vitest": "^0.26.1"
   },
   "dependencies": {
+    "cli-highlight": "^2.1.11",
     "lodash-es": "^4.17.21"
   }
 }

@@ -1,11 +1,15 @@
 import _ from "lodash-es";
 
 export const dj = (json) => {
-  const data = JSON.parse(json);
+  try {
+    const data = JSON.parse(json);
 
-  // TODO
-  // handle invalid json
-  return describe(data);
+    // TODO
+    // handle invalid json
+    return describe(data);
+  } catch (error) {
+    throw new Error("Invalid JSON");
+  }
 };
 
 const describe = (data) => {

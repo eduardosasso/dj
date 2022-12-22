@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
 import { dj } from "../dj.js";
+import { highlight } from "cli-highlight";
 
 test("primitive types", () => {
   const data = {
@@ -35,6 +36,7 @@ test("array", () => {
   const result = dj(json);
 
   // console.log(JSON.stringify(result, null, 2));
+  console.log(highlight(JSON.stringify(result, null, 2), { language: "json" }));
 
   const expected = {
     items: [
@@ -214,4 +216,8 @@ test("null or undefined", () => {
   };
 
   expect(result).toEqual(expected);
+});
+
+test("invalid json", () => {
+  expect(() => dj("not a valid json")).toThrowError("Invalid JSON");
 });
