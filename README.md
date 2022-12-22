@@ -17,7 +17,7 @@ It shows top-level as well nested elements along with data types, max length, co
 ## EXAMPLES
 
 ```bash
- echo '{"details": {"name": "Super", "price": 39.99, "ratings": [3, 5, 2]}}' | dj
+echo '{"details": {"name": "Super", "price": 39.99, "ratings": [3, 5, 2]}}' | dj
 
 {
   "details": {
