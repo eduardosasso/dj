@@ -17,30 +17,16 @@ It shows top-level as well nested elements along with data types, max length, co
 ## EXAMPLES
 
 ```bash
-echo '{"name": "Joe", "age": 20, "active": true}' | dj
-
-{
-  "name": {
-    "_type": "string",
-    "_maxLength": 3
-  },
-  "age": {
-    "_type": "integer",
-    "_maxLength": 2
-  },
-  "active": {
-    "_type": "boolean"
-  }
-}
-```
-
-```bash
- echo '{"details": {"price": 39.99, "ratings": [3, 5, 2]}}' | dj
+ echo '{"details": {"name": "Super", "price": 39.99, "ratings": [3, 5, 2]}}' | dj
 
 {
   "details": {
     "_type": "object",
     "_structure": {
+      "name": {
+        "_type": "string",
+        "_maxLength": 5
+      },
       "price": {
         "_type": "float",
         "_maxLength": 5
