@@ -57,23 +57,12 @@ echo '{"sports": ["surf", "running", "biking", "skateboarding"]}' | dj
  echo '{"details": {"price": 39.99, "ratings": [3, 5, 2]}}' | dj
 
 {
-  "title": {
-    "_type": "string",
-    "_maxLength": 11
-  },
   "details": {
     "_type": "object",
     "_structure": {
-      "count": {
-        "_type": "integer",
-        "_maxLength": 2
-      },
       "price": {
         "_type": "float",
         "_maxLength": 5
-      },
-      "available": {
-        "_type": "boolean"
       },
       "ratings": [
         {
