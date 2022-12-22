@@ -54,7 +54,7 @@ echo '{"sports": ["surf", "running", "biking", "skateboarding"]}' | dj
 ```
 
 ```bash
- echo '{"title": "Hello World", "details": {"count": 20, "price": 39.99, "available": false, "ratings": [3, 5, 2]}}' | dj
+ echo '{"details": {"price": 39.99, "ratings": [3, 5, 2]}}' | dj
 
 {
   "title": {
