@@ -36,6 +36,7 @@ echo '{"name": "Joe", "age": 20, "active": true}' | dj
 
 ```bash
 echo '{"sports": ["surf", "running", "biking", "skateboarding"]}' | dj
+
 {
   "sports": [
     {
@@ -49,5 +50,44 @@ echo '{"sports": ["surf", "running", "biking", "skateboarding"]}' | dj
       ]
     }
   ]
+}
+```
+
+```bash
+ echo '{"title": "Hello World", "details": {"count": 20, "price": 39.99, "available": false, "ratings": [3, 5, 2]}}' | dj
+
+{
+  "title": {
+    "_type": "string",
+    "_maxLength": 11
+  },
+  "details": {
+    "_type": "object",
+    "_structure": {
+      "count": {
+        "_type": "integer",
+        "_maxLength": 2
+      },
+      "price": {
+        "_type": "float",
+        "_maxLength": 5
+      },
+      "available": {
+        "_type": "boolean"
+      },
+      "ratings": [
+        {
+          "_type": "array",
+          "_count": 3,
+          "_structure": [
+            {
+              "_type": "integer",
+              "_maxLength": 1
+            }
+          ]
+        }
+      ]
+    }
+  }
 }
 ```
