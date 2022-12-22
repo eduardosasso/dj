@@ -35,25 +35,6 @@ echo '{"name": "Joe", "age": 20, "active": true}' | dj
 ```
 
 ```bash
-echo '{"sports": ["surf", "running", "biking", "skateboarding"]}' | dj
-
-{
-  "sports": [
-    {
-      "_type": "array",
-      "_count": 4,
-      "_structure": [
-        {
-          "_type": "string",
-          "_maxLength": 13
-        }
-      ]
-    }
-  ]
-}
-```
-
-```bash
  echo '{"details": {"price": 39.99, "ratings": [3, 5, 2]}}' | dj
 
 {
